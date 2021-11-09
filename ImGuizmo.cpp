@@ -42,14 +42,17 @@
 // includes patches for multiview from
 // https://github.com/CedricGuillemet/ImGuizmo/issues/15
 
+
 namespace IMGUIZMO_NAMESPACE
 {
+   const auto transform_line_thickness = 6.0f;
+   const auto thickness = 3.0f;
    static const float ZPI = 3.14159265358979323846f;
    static const float RAD2DEG = (180.f / ZPI);
    static const float DEG2RAD = (ZPI / 180.f);
    const float screenRotateSize = 0.06f;
    // scale a bit so translate axis do not touch when in universal
-   const float rotationDisplayFactor = 1.2f;
+   const float rotationDisplayFactor = 1.0f;
 
    static OPERATION operator&(OPERATION lhs, OPERATION rhs)
    {
@@ -1229,7 +1232,7 @@ namespace IMGUIZMO_NAMESPACE
          }
          if (!gContext.mbUsing || usingAxis)
          {
-            drawList->AddPolyline(circlePos, circleMul* halfCircleSegmentCount + 1, colors[3 - axis], false, 4);
+            drawList->AddPolyline(circlePos, circleMul* halfCircleSegmentCount + 1, colors[3 - axis], false, 6);
          }
 
          float radiusAxis = sqrtf((ImLengthSqr(worldToPos(gContext.mModel.v.position, gContext.mViewProjection) - circlePos[0])));
@@ -1483,7 +1486,7 @@ namespace IMGUIZMO_NAMESPACE
                ImVec2 baseSSpace = worldToPos(dirAxis * 0.1f * gContext.mScreenFactor, gContext.mMVP);
                ImVec2 worldDirSSpace = worldToPos(dirAxis * gContext.mScreenFactor, gContext.mMVP);
 
-               drawList->AddLine(baseSSpace, worldDirSSpace, colors[i + 1], 5.f);
+               drawList->AddLine(baseSSpace, worldDirSSpace, colors[i + 1], transform_line_thickness);
 
                // Arrow head begin
                ImVec2 dir(origin - worldDirSSpace);
